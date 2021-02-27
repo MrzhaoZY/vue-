@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>promise的基本用法</title>
+	</head>
+	<body>
+		<script>
+			/* 
+                promise的基本使用
+            */
+			console.log(typeof Promise);
+			console.dir(Promise);
+
+			var p = new Promise(function (resolve, reject) {
+				// 实现具体的异步任务
+				setTimeout(function () {
+					var flag = false;
+					if (flag) {
+						// 正常情况
+						resolve('hello');
+					} else {
+						// 异常情况
+						reject('出错了');
+					}
+				}, 1000);
+			});
+			p.then(
+				data => {
+					console.log(data);
+				},
+				info => {
+					console.log(info);
+				}
+			);
+		</script>
+	</body>
+</html>

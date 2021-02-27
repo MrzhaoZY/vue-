@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>axios接口调用</title>
+	</head>
+	<body>
+		<script src="../js/axios.js"></script>
+		<script>
+			axios.get('http://localhost:3000/adata').then(adata => {
+				console.log(adata.data);
+				// 注意data属性是固定的用法，用于获取后台的实际数据
+				console.log(adata);
+			});
+
+			/*
+			             axios的常用api
+			         */
+			axios.get('http://localhost:3000/axios?id=123').then(ret => {
+				console.log(ret);
+				console.log(ret.data);
+			});
+			axios.get('http://localhost:3000/axios/123').then(ret => {
+				console.log(ret);
+				console.log(ret.data);
+			});
+			//params传递参数
+			axios
+				.get('http://localhost:3000/axios', {
+					params: {
+						id: 123,
+					},
+				})
+				.then(adata => {
+					console.log(adata.data);
+				});
+
+			//-----------------------------------
+			axios.delete('http://localhost:3000/axios?id=123').then(ret => {
+				console.log(ret);
+				console.log(ret.data);
+			});
+			axios.delete('http://localhost:3000/axios/123').then(ret => {
+				console.log(ret);
+				console.log(ret.data);
+			});
+			//params传递参数
+			axios
+				.delete('http://localhost:3000/axios', {
+					params: {
+						id: 123,
+					},
+				})
+				.then(adata => {
+					console.log(adata.data);
+				});
+
+			// post传递参数
+			/* axios
+				.post('http://localhost:3000/axios', {
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+					uname: 'zhangsan',
+					age: 20,
+				})
+				.then(ret => {
+					console.log(ret.data);
+				}); */
+
+			var params = new URLSearchParams();
+			params.append('uname', 'zhangsan');
+			params.append('pwd', '123456');
+			axios.post('http://localhost:3000/axios', params).then(ret => {
+				console.log(ret.data);
+			});
+		</script>
+	</body>
+</html>

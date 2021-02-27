@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>前后端交互模式</title>
+		<script src="../js/jquery.min.js"></script>
+	</head>
+	<body>
+		<script>
+			/* 
+                前后端交互-异步编程与promise
+            */
+			var ret = '---';
+			// 这里如果想要保证顺序  就得嵌套
+			$.ajax({
+				url: 'http://localhost:3000/data',
+				success: function (data) {
+					console.log(data);
+					ret = data;
+
+					$.ajax({
+						url: 'http://localhost:3000/data1',
+						success: function (data) {
+							console.log(data);
+							ret = data;
+							$.ajax({
+								url: 'http://localhost:3000/data2',
+								success: function (data) {
+									console.log(data);
+									ret = data;
+								},
+							});
+						},
+					});
+				},
+			});
+			console.log(ret); // 因为异步 所以得不到最终结果
+
+			//---------------------------
+		</script>
+	</body>
+</html>

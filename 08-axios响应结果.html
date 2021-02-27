@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>axios响应结果</title>
+	</head>
+	<body>
+		<script src="../js/axios.js"></script>
+		<script>
+			/* axios.get('http://localhost:3000/axios-json').then(ret => {
+				console.log(ret.data.uname);
+			}); */
+
+			// 配置请求的基准url地址
+			axios.defaults.baseURL = 'http://localhost:3000/';
+			// 配置请求头信息
+			axios.defaults.headers['mytoken'] = 'hello';
+			axios.get('axios-json').then(ret => {
+				console.log(ret.data);
+			});
+		</script>
+	</body>
+</html>

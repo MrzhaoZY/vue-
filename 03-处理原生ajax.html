@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>处理原生ajax</title>
+	</head>
+	<body>
+		<script>
+			/* 
+            基于Promise 发送ajax请求
+        */
+			function queryData(url) {
+				return new Promise(function (resolve, reject) {
+					var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState != 4) return;
+						if (xhr.readyState == 4 && xhr.status == 200) {
+							// 处理正确的情况
+							resolve(xhr.responseText);
+						} else {
+							// 处理异常情况
+							reject('服务器错误！');
+						}
+					};
+					xhr.open('get', url);
+					xhr.send(null);
+				});
+			}
+			/* queryData('http://localhost:3000/data').then(
+				data => {
+					console.log(data);
+				},
+				info => {
+					console.log(info);
+				}
+			); */
+
+			/* ---------------------- */
+			/* 发送多个ajax请求  并保证顺序 */
+			queryData('http://localhost:3000/data')
+				.then(data => {
+					console.log(data);
+					return queryData('http://localhost:3000/data1');
+				})
+				.then(data => {
+					console.log(data);
+					return queryData('http://localhost:3000/data2');
+				})
+				.then(data => {
+					console.log(data);
+				});
+			/* ----------- */
+			queryData('http://localhost:3000/data')
+				.then(data => {
+					return queryData('http://localhost:3000/data1');
+				})
+				.then(data => {
+					return new Promise(function (resolve, reject) {
+						setTimeout(function () {
+							resolve(123);
+						}, 1000);
+					});
+				})
+				.then(data => {
+					console.log(data);
+					return 'hello';
+				})
+				.then(data => {
+					console.log(data);
+				});
+		</script>
+	</body>
+</html>
